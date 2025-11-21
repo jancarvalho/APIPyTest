@@ -92,3 +92,19 @@ def sample_book_data() -> dict:
         "excerpt": "This is a sample excerpt from the book.",
         "publishDate": "2024-01-01T00:00:00Z"
     }
+    
+@pytest.fixture
+def book_id(valid_book_id: Dict[str, Any]) -> int:
+    """
+    Fixture that provides only the ID from a valid book payload.
+    """
+    return valid_book_id["id"]
+
+@pytest.fixture
+def nonexistent_book_id(book_client: BookClient) -> int:
+    """
+    Fixture that provides only the ID from a valid book payload.
+    """
+    existing_ids = book_client.get_existing_book_ids()
+    nonexistent_id = max(existing_ids) + 1000 if existing_ids else 1
+    return nonexistent_id

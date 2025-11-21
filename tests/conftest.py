@@ -67,14 +67,15 @@ def valid_book_id(book_client: BookClient, random_book_id: int) -> Dict[str, Any
     book = book_client.build_valid_book_data(random_book_id)
     if not book:
         raise ValueError("No book available to select a valid ID from.")
-    return {
-        "id": book['id'],
-        "title": book['title'],
-        "description": book['description'],
-        "pageCount": book['pageCount'],
-        "excerpt": book['excerpt'],
-        "publishDate": book['publishDate']
-    }
+    # return {
+    #     "id": book['id'],
+    #     "title": book['title'],
+    #     "description": book['description'],
+    #     "pageCount": book['pageCount'],
+    #     "excerpt": book['excerpt'],
+    #     "publishDate": book['publishDate']
+    # }
+    return book
 
 @pytest.fixture
 def sample_book_data() -> dict:

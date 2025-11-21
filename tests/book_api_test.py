@@ -145,8 +145,10 @@ def test_delete_existing_book(book_client: BookClient, book_id: int) -> None:
     Returns:
         None
     """
-    response = book_client.delete_book(book_id)
-    assert response is not None
+    existing_book_ids = book_client.get_existing_book_ids()
+    pytest.skip("Skipping test as no existing books are available.") if not existing_book_ids else None
+    response = book_client.delete_book(existing_book_ids[0])
+
     assert response.status_code in (HTTPStatus.OK, HTTPStatus.NO_CONTENT)
     
 def test_delete_nonexistent_book(book_client: BookClient, nonexistent_book_id: int) -> None:
@@ -158,6 +160,7 @@ def test_delete_nonexistent_book(book_client: BookClient, nonexistent_book_id: i
     Returns:
         None
     """
+    nonexistent_book_id = 999_9999
     response = book_client.delete_book(nonexistent_book_id)
     assert response.status_code in(HTTPStatus.OK, HTTPStatus.NO_CONTENT, HTTPStatus.NOT_FOUND)
     

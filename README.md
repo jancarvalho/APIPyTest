@@ -29,3 +29,12 @@ tests/
 requirements.txt        # Providing all the the configuration for pytest and python instalation
 pytest.ini              # Configuration for initializing all the process
 README.md               # All instructions about the project and execution
+
+# Tests implemented
+- List all Books existing;
+- Create new book;
+- Update existing book;
+- Update non existing book;
+- Delete existing book;
+- Delete non existing book;
+- Create book non formated;

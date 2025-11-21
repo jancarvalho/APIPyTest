@@ -8,6 +8,10 @@ It is using:
 - **pytest-html** for Test reports
 - **Github Actions** for CI - Pipelines call
 
+# Pre-Requirements
+- Python 3.13
+- pip
+
 # Project Structure
 This project is structured based on the best pratices of test framework, for automation tests
 

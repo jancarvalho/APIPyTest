@@ -134,17 +134,17 @@ class BookClient:
         # response.raise_for_status()
         return response
     
-    def create_book(self, book_data: BookClientConfig) -> requests.Response:
+    def create_book(self, book_data: Dict[str, Any]) -> requests.Response:
         """
         Create a new book in the API.
 
         Args:
-            book_data (BookClientConfig): The data for the new book.
+            book_data (Dict[str, Any]): The data for the new book.
 
         Returns:
             Dict[str, Any]: The created book data.
         """
-        payload = asdict(book_data) if isinstance(book_data, BookClientConfig) else book_data
+        payload = asdict(book_data) if isinstance(book_data, dict) else book_data
         
         response = requests.post(
             f"{self.config.url_base}/api/v1/Books",
@@ -153,7 +153,7 @@ class BookClient:
         response.raise_for_status()
         return response
     
-    def update_book(self, book_id: int, book_data: BookClientConfig) -> Dict[str, Any]:
+    def update_book(self, book_id: int, book_data: Dict[str, Any]) -> Dict[str, Any]:
         """
         Update an existing book in the API.
 
@@ -164,7 +164,7 @@ class BookClient:
         Returns:
             Dict[str, Any]: The updated book data.
         """
-        payload = asdict(book_data) if isinstance(book_data, BookClientConfig) else book_data
+        payload = asdict(book_data) if isinstance(book_data, dict) else book_data
 
         response = requests.put(
             f"{self.config.url_base}/api/v1/Books/{book_id}",
@@ -231,7 +231,7 @@ class BookClient:
         existing_ids = self.get_existing_book_ids()
         return book_id in existing_ids
     
-    def build_valid_book_data(self, random_book_id: int) -> Book:
+    def build_valid_book_data(self, random_book_id: int) -> Dict[str, Any]:
         """
         Build a valid book data object with optional overrides.
 
@@ -241,10 +241,12 @@ class BookClient:
         Returns:
             BookClientConfig: The constructed book data object.
         """
-        return Book(id=random_book_id,
-            title=f"Creating valid book randomic{random_book_id}",
-            description=f"Default Description for create book {random_book_id}",
-            page_count=100,
-            excerpt=f"This is a default excerpt. book randomic{random_book_id}",
-            publish_date="2023-01-01T00:00:00Z"
-            )
+        default_data = {
+            "id": random_book_id,
+            "title": f"Creating valid book randomic{random_book_id}",
+            "description": f"Default Description for create book {random_book_id}",
+            "page_count": 100,
+            "excerpt": f"This is a default excerpt. book randomic{random_book_id}",
+            "publish_date": "2023-01-01T00:00:00Z"
+        }
+        return default_data

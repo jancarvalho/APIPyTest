@@ -19,11 +19,11 @@ def test_get_all_valid_books(book_client: BookClient) -> None:
         List[Dict[str, Any]]: A list of valid books.
     """
     response = book_client.list_books()
-    assert response is not None
-    assert isinstance(response, list)
+    assert response.status_code == HTTPStatus.OK
     data = response.json()
-    # return [book for book in data if 'id' in book and 'title' in book]
-    return data
+    assert isinstance(data, list)
+    if data:
+        assert isinstance(data[0], dict)
 
 def test_get_valid_book_by_id(book_client: BookClient) -> None:
     """

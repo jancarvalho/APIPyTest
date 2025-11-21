@@ -241,12 +241,10 @@ class BookClient:
         Returns:
             BookClientConfig: The constructed book data object.
         """
-        default_data = {
-            "id": random_book_id,
-            "title": f"Creating valid book randomic{random_book_id}",
-            "description": f"Default Description for create book {random_book_id}",
-            "page_count": 100,
-            "excerpt": f"This is a default excerpt. book randomic{random_book_id}",
-            "publish_date": "2023-01-01T00:00:00Z"
-        }
-        return Book(**default_data)
+        return Book(id=random_book_id,
+            title=f"Creating valid book randomic{random_book_id}",
+            description=f"Default Description for create book {random_book_id}",
+            page_count=100,
+            excerpt=f"This is a default excerpt. book randomic{random_book_id}",
+            publish_date="2023-01-01T00:00:00Z"
+            )

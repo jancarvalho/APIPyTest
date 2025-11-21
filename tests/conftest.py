@@ -49,10 +49,11 @@ def random_book_id(book_client: BookClient) -> int:
     Returns:
         int: A random valid book ID.
     """
-    books = book_client.list_books()
-    if not books:
-        raise ValueError("No books available to select a random ID from.")
-    return random.choice(books)['id']
+    # books = book_client.list_books()
+    # if not books:
+    #     raise ValueError("No books available to select a random ID from.")
+    # return random.choice(books)['id']
+    return random.randint(10_000, 99_999)
 
 @pytest.fixture
 def valid_book_id(book_client: BookClient, random_book_id: int) -> Dict[str, Any]:

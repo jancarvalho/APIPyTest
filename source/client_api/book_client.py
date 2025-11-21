@@ -19,7 +19,7 @@ class BookClientConfig:
     id: Optional[int] = None
     title: Optional[str] = None
     description: Optional[str] = None
-    page_count: Optional[int] = None
+    pageCount: Optional[int] = None
     excerpt: Optional[str] = None
     publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 
@@ -35,7 +35,7 @@ class Book:
     id: Optional[int] = None
     title: Optional[str] = None
     description: Optional[str] = None
-    page_count: Optional[int] = None
+    pageCount: Optional[int] = None
     excerpt: Optional[str] = None
     publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 class BookClient:
@@ -245,7 +245,7 @@ class BookClient:
             "id": random_book_id,
             "title": f"Creating valid book randomic{random_book_id}",
             "description": f"Default Description for create book {random_book_id}",
-            "page_count": 100,
+            "pageCount": 100,
             "excerpt": f"This is a default excerpt. book randomic{random_book_id}",
             "publish_date": "2023-01-01T00:00:00Z"
         }

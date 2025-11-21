@@ -72,7 +72,6 @@ def test_create_valid_book(book_client: BookClient, valid_book_id: Dict[str, Any
     response = book_client.create_book(book_data)
     assert response.status_code in(HTTPStatus.CREATED, HTTPStatus.OK)
 
-    
     created_book = response.json()
     
     for key, value in book_data.items():
@@ -91,7 +90,7 @@ def test_create_invalid_book(book_client: BookClient) -> None:
         "id": "non-integer",
         "title": "", 
         "description": 123, 
-        "page_count": -50
+        "pageCount": -50
         }
     response = book_client.create_book(invalid_payload)
     # assert response.status_code == HTTPStatus.BAD_REQUEST

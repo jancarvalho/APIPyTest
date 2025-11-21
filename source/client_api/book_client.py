@@ -116,7 +116,7 @@ class BookClient:
             Dict[str, Any]: The book data.
         """
         response = requests.get(f"{self.config.url_base}/api/v1/Books/{book_id}")
-        response.raise_for_status()
+        # response.raise_for_status()
         return response
     
     def create_book(self, book_data: BookClientConfig) -> requests.Response:

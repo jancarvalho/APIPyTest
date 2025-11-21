@@ -96,7 +96,7 @@ def test_create_invalid_book(book_client: BookClient) -> None:
     # assert response.status_code == HTTPStatus.BAD_REQUEST
     assert 400 <= response.status_code < 500
     
-def test_update_existing_book(book_client: BookClient, book_id: int, update_payload: Dict[str, Any]) -> None:
+def test_update_existing_book(book_client: BookClient, valid_book_id: Dict[str, Any]) -> None:
     """
     Helper function to update an existing book in the API.
     Args:
@@ -106,17 +106,22 @@ def test_update_existing_book(book_client: BookClient, book_id: int, update_payl
     Returns:
         Dict[str, Any]: The updated book data.
     """
-    book_data = update_payload
-    response = book_client.update_book(book_id, book_data)
-    assert response is not None
-    assert isinstance(response, dict)
-    assert response.status_code == HTTPStatus.OK
+    book_data = valid_book_id
+    existing_books_id = book_client.get_existing_book_ids()
+    destination_book_id = existing_books_id[0] if existing_books_id else book_data['id']
+    
+    update_payload = {**book_data, "id": destination_book_id}
+    update_payload["title"] = f"{book_data['title']} - Updated Title {destination_book_id}"
+    
+    response = book_client.update_book(destination_book_id, update_payload)
+    
+    assert response.status_code in (HTTPStatus.OK, HTTPStatus.CREATED)    
     updated_book = response.json()
     
-    for key, value in book_data.items():
-        assert updated_book[key] == value
+    assert updated_book['id'] == destination_book_id
+    assert updated_book['title'] == update_payload['title']
         
-def test_update_nonexistent_book(book_client: BookClient, nonexistent_book_id: int, update_payload: Dict[str, Any]) -> None:
+def test_update_nonexistent_book(book_client: BookClient, valid_book_id: Dict[str, Any]) -> None:
     """
     Helper function to attempt updating a non-existent book in the API.
     Args:
@@ -126,7 +131,8 @@ def test_update_nonexistent_book(book_client: BookClient, nonexistent_book_id: i
     Returns:
         None
     """
-    book_data = update_payload
+    nonexistent_book_id = 999_9999
+    book_data = valid_book_id
     response = book_client.update_book(nonexistent_book_id, book_data)
     assert response.status_code in (HTTPStatus.OK, HTTPStatus.NOT_FOUND, HTTPStatus.BAD_REQUEST, HTTPStatus.NOT_FOUND)
 

@@ -103,7 +103,7 @@ class BookClient:
         """
         response = requests.get(self._url("/api/v1/Books"))
         response.raise_for_status()
-        return response
+        return response.json
     
     def get_book(self, book_id: int) -> requests.Response:
         """
@@ -117,7 +117,7 @@ class BookClient:
         """
         response = requests.get(f"{self.config.url_base}/api/v1/Books/{book_id}")
         response.raise_for_status()
-        return response
+        return response.json()
     
     def create_book(self, book_data: BookClientConfig) -> requests.Response:
         """
@@ -136,7 +136,7 @@ class BookClient:
             json=payload
         )
         response.raise_for_status()
-        return response
+        return response.json()
     
     def update_book(self, book_id: int, book_data: BookClientConfig) -> Dict[str, Any]:
         """

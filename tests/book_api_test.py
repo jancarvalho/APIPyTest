@@ -21,8 +21,9 @@ def test_get_all_valid_books(book_client: BookClient) -> None:
     response = book_client.list_books()
     assert response is not None
     assert isinstance(response, list)
-    data =response.json()
-    return [book for book in data if 'id' in book and 'title' in book]
+    data = response.json()
+    # return [book for book in data if 'id' in book and 'title' in book]
+    return data
 
 def test_get_valid_book_by_id(book_client: BookClient) -> None:
     """

@@ -49,7 +49,7 @@ def random_book_id(book_client: BookClient) -> int:
     Returns:
         int: A random valid book ID.
     """
-    books = book_client.get_books()
+    books = book_client.list_books()
     if not books:
         raise ValueError("No books available to select a random ID from.")
     return random.choice(books)['id']
@@ -63,7 +63,6 @@ def valid_book_id(book_client: BookClient, random_book_id: int) -> Dict[str, Any
     Returns:
         int: A valid book ID.
     """
-    # books = book_client.get_books()
     book = book_client.build_valid_book_data(random_book_id)
     if not book:
         raise ValueError("No book available to select a valid ID from.")

@@ -150,7 +150,7 @@ class BookClient:
             f"{self.config.url_base}/api/v1/Books",
             json=payload
         )
-        response.raise_for_status()
+        # response.raise_for_status()
         return response
     
     def update_book(self, book_id: int, book_data: Dict[str, Any]) -> Dict[str, Any]:

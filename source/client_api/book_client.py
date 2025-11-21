@@ -182,7 +182,7 @@ class BookClient:
         """
         response = requests.delete(self._url(f"/api/v1/Books/{book_id}"))
         response.raise_for_status()
-        return response.status_code == 204
+        return response
     
     def get_schema(self) -> Dict[str, Any]:
         """
@@ -250,3 +250,4 @@ class BookClient:
             "publishDate": "2023-01-01T00:00:00Z"
         }
         return default_data
+    

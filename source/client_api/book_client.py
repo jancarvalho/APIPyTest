@@ -21,7 +21,7 @@ class BookClientConfig:
     description: Optional[str] = None
     pageCount: Optional[int] = None
     excerpt: Optional[str] = None
-    publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
+    publishDate: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 
 @dataclass
 class Book:
@@ -37,7 +37,7 @@ class Book:
     description: Optional[str] = None
     pageCount: Optional[int] = None
     excerpt: Optional[str] = None
-    publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
+    publishDate: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 class BookClient:
     """
     Client for interacting with the Book API.
@@ -247,6 +247,6 @@ class BookClient:
             "description": f"Default Description for create book {random_book_id}",
             "pageCount": 100,
             "excerpt": f"This is a default excerpt. book randomic{random_book_id}",
-            "publish_date": "2023-01-01T00:00:00Z"
+            "publishDate": "2023-01-01T00:00:00Z"
         }
         return default_data

@@ -23,6 +23,21 @@ class BookClientConfig:
     excerpt: Optional[str] = None
     publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 
+@dataclass
+class Book:
+    """
+    Configuration for the Book API client.
+    Attributes:
+        url_base (str): The base URL for the Book API.
+        url_base: str = "https://fakerestapi.azurewebsites.net"
+        schema api: defines all the schemas for the API
+    """
+    id: Optional[int] = None
+    title: Optional[str] = None
+    description: Optional[str] = None
+    page_count: Optional[int] = None
+    excerpt: Optional[str] = None
+    publish_date: Optional[str] = None # ISO 8601 format "YYYY-MM-DDTHH:MM:SSZ"
 class BookClient:
     """
     Client for interacting with the Book API.
@@ -216,7 +231,7 @@ class BookClient:
         existing_ids = self.get_existing_book_ids()
         return book_id in existing_ids
     
-    def build_valid_book_data(self, overrides: Optional[Dict[str, Any]] = None) -> BookClientConfig:
+    def build_valid_book_data(self, random_book_id: int) -> Book:
         """
         Build a valid book data object with optional overrides.
 
@@ -227,13 +242,11 @@ class BookClient:
             BookClientConfig: The constructed book data object.
         """
         default_data = {
-            "title": "Default Title",
-            "description": "Default Description",
+            "id": random_book_id,
+            "title": f"Creating valid book randomic{random_book_id}",
+            "description": f"Default Description for create book {random_book_id}",
             "page_count": 100,
-            "excerpt": "This is a default excerpt.",
+            "excerpt": f"This is a default excerpt. book randomic{random_book_id}",
             "publish_date": "2023-01-01T00:00:00Z"
         }
-        if overrides:
-            default_data.update(overrides)
-        
-        return BookClientConfig(**default_data)
+        return Book(**default_data)

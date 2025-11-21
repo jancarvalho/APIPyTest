@@ -144,7 +144,7 @@ class BookClient:
         Returns:
             Dict[str, Any]: The created book data.
         """
-        payload = asdict(book_data) if isinstance(book_data, dict) else book_data
+        payload = book_data if isinstance(book_data, dict) else book_data
         
         response = requests.post(
             f"{self.config.url_base}/api/v1/Books",

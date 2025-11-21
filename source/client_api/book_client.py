@@ -197,8 +197,11 @@ class BookClient:
         Returns:
             List[int]: A list of existing book IDs.
         """
-        books = self.get_books()
-        return [book["id"] for book in books if "id" in book]
+        response = self.list_books()
+        response.raise_for_status()
+        books = response.json()
+        
+        return [book["id"] for book in books] if isinstance(books, list) else []
     
     def book_exists(self, book_id: int) -> bool:
         """

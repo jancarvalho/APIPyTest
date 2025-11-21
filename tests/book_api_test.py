@@ -38,12 +38,11 @@ def test_get_valid_book_by_id(book_client: BookClient) -> None:
     
     book_id = books[0]
     response = book_client.get_book(book_id)
-    assert response is not None
-    assert isinstance(response, dict)
+    
     assert response.status_code == HTTPStatus.OK
+    
     book = response.json()
     assert book['id'] == book_id
-    
     assert isinstance(book['title'], str)
     
 def test_get_nonexistent_book_id(book_client: BookClient) -> None:

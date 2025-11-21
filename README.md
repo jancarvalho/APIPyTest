@@ -12,6 +12,15 @@ It is using:
 - Python 3.13
 - pip
 
+# Implemented tests:
+- List all Books existing;
+- Create new book;
+- Update existing book;
+- Update non existing book;
+- Delete existing book;
+- Delete non existing book;
+- Create book non formated;
+
 # Project Structure
 This project is structured based on the best pratices of test framework, for automation tests
 
@@ -28,13 +37,5 @@ tests/
         test-api.yaml   # Actions from GitHub to CI Pipelines
 requirements.txt        # Providing all the the configuration for pytest and python instalation
 pytest.ini              # Configuration for initializing all the process
-README.md               # All instructions about the project and execution
+README.md               # All instructions about the project and executio
 
-# Tests implemented
-- List all Books existing;
-- Create new book;
-- Update existing book;
-- Update non existing book;
-- Delete existing book;
-- Delete non existing book;
-- Create book non formated;

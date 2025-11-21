@@ -1,44 +1,42 @@
-name: Test API
+name: Run API Tests
+
 on:
   push:
-    branches: [main, master]
+    branches: [ main ]
   pull_request:
-    branches: [main, master]
+    branches: [ main ]
 
 jobs:
-  test-api:
+  test:
     runs-on: ubuntu-latest
+    
     strategy:
       matrix:
         python-version: ['3.11', '3.12', '3.13']
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip install pytest pytest-cov pytest-html
-          pip install -r requirements.txt
-      - name: Run pytest
-        env:
-          PYTHONPATH: ./source
-          URL_BASE: "https://fakerestapi.azurewebsites.net"
-        run: |
-          pytest --maxfail=1 --html=reports/report.html
-      - name: Upload Test Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: Test Report
-          path: reports/report.html
-          if-no-files-found: Warn
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: Coverage Report
-          path: reports/coverage_html
-          if-no-files-found: Warn
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run tests with pytest
+      run: |
+        pytest -v --html=report.html --self-contained-html
+      env:
+        CLIENT_API_VERIFY_SSL: false
+    
+    - name: Upload test report
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-report-python-${{ matrix.python-version }}
+        path: report.html

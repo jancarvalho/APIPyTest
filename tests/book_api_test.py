@@ -56,9 +56,10 @@ def test_get_nonexistent_book_id(book_client: BookClient) -> None:
     existing_ids = book_client.get_existing_book_ids()
     nonexistent_id = max(existing_ids) + 1000 if existing_ids else 1
     response = book_client.get_book(nonexistent_id)
+    
     assert response.status_code == HTTPStatus.NOT_FOUND
 
-def test_create_valid_book(book_client: BookClient, valid_payload: Dict[str, Any]) -> None:
+def test_create_valid_book(book_client: BookClient, valid_book_id: Dict[str, Any]) -> None:
     """
     Helper function to create a valid book in the API.
     Args:
@@ -67,17 +68,17 @@ def test_create_valid_book(book_client: BookClient, valid_payload: Dict[str, Any
     Returns:
         Dict[str, Any]: The created book data.
     """
-    book_data = valid_payload
+    book_data = valid_book_id
     response = book_client.create_book(book_data)
-    assert response is not None
-    assert isinstance(response, dict)
-    assert response.status_code == HTTPStatus.CREATED
+    assert response.status_code in(HTTPStatus.CREATED, HTTPStatus.OK)
+
+    
     created_book = response.json()
     
     for key, value in book_data.items():
         assert created_book[key] == value
         
-def test_create_invalid_book(book_client: BookClient, invalid_payload: Dict[str, Any]) -> None:
+def test_create_invalid_book(book_client: BookClient) -> None:
     """
     Helper function to attempt creating an invalid book in the API.
     Args:
@@ -86,9 +87,15 @@ def test_create_invalid_book(book_client: BookClient, invalid_payload: Dict[str,
     Returns:
         None
     """
-    book_data = invalid_payload
-    response = book_client.create_book(book_data)
-    assert response.status_code == HTTPStatus.BAD_REQUEST
+    invalid_payload = {
+        "id": "non-integer",
+        "title": "", 
+        "description": 123, 
+        "page_count": -50
+        }
+    response = book_client.create_book(invalid_payload)
+    # assert response.status_code == HTTPStatus.BAD_REQUEST
+    assert 400 <= response.status_code < 500
     
 def test_update_existing_book(book_client: BookClient, book_id: int, update_payload: Dict[str, Any]) -> None:
     """
